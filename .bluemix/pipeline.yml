@@ -1,6 +1,6 @@
 ---
 stages:
-- name: Build Stage
+- name: BUILD
   inputs:
   - type: git
     branch: master
@@ -18,7 +18,7 @@ stages:
   triggers:
   - type: stage
   jobs:
-  - name: Deploy to dev
+  - name: DEPLOY
     type: deployer
     target:
       region_id: ${PROD_REGION_ID}
