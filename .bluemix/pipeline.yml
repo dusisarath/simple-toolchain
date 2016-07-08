@@ -27,7 +27,7 @@ stages:
       application: ${CF_APP_NAME}
     script: |-
       #!/bin/bash
-      cf push "${CF_APP}"
+      cf push "${CF_APP_NAME}"
 
       # View logs
       #cf logs "${CF_APP}" --recen
