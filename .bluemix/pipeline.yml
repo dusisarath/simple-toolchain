@@ -22,9 +22,10 @@ stages:
         type: deployer
         target:
           url: 'https://api.ng.bluemix.net'
-          organization: dusisarath@in.ibm.com
-          space: Dev
-          application: Delivery-Pipeline-Testing-App
+          organization: '${PROD_ORG_NAME}'
+          space: '${PROD_SPACE_NAME}'
+          application: '${CF_APP_NAME}'
+          region_id: '${PROD_REGION_ID}'
         script: |-
           #!/bin/bash
           cf push "${CF_APP}"
