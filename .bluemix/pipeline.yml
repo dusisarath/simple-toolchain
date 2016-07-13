@@ -3,7 +3,7 @@ stages:
     inputs:
       - type: git
         branch: master
-        service: '${SAMPLE_REPO1}'
+        service: '${SAMPLE_REPO2}'
     triggers:
       - type: commit
     jobs:
