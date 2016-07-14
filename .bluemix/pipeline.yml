@@ -6,6 +6,10 @@ stages:
         service: '${SAMPLE_REPO}'
     triggers:
       - type: commit
+    properties:
+      - name: PB_BUILD_PROP
+        value: PradeepsBuild
+        type: text
     jobs:
       - name: Build
         type: builder
@@ -20,6 +24,10 @@ stages:
         job: Build
     triggers:
       - type: stage
+    properties:
+      - name: PB_DEPLOY_PROP
+        value: PBDeploy
+        type: text
     jobs:
       - name: Deploy
         type: deployer
