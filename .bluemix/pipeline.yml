@@ -9,7 +9,10 @@ stages:
     jobs:
       - name: Build
         type: builder
-        artifact_dir: ''
+        build_type: ant
+        script: |-
+          #!/bin/bash
+          ant -DARCHIVE_DIR=${ARCHIVE_DIR}
   - name: Deploy Stage
     inputs:
       - type: job
@@ -18,17 +21,11 @@ stages:
     triggers:
       - type: stage
     jobs:
-      - name: Deploy to dev
+      - name: Deploy
         type: deployer
         target:
-          url: 'https://api.ng.bluemix.net'
+          region_id: '${PROD_REGION_ID}'
           organization: '${PROD_ORG_NAME}'
           space: '${PROD_SPACE_NAME}'
           application: '${CF_APP_NAME}'
-          region_id: '${PROD_REGION_ID}'
-        script: |-
-          #!/bin/bash
-          cf push "${CF_APP}"
-
-          # View logs
-          #cf logs "${CF_APP}" --recent
+        script: 'cf push ${CF_APP}'
