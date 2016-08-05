@@ -6,17 +6,10 @@ stages:
         service: '${SAMPLE_REPO}'
     triggers:
       - type: commit
-    properties:
-      - name: PB_BUILD_PROP
-        value: PradeepsBuild
-        type: text
     jobs:
       - name: Build
         type: builder
-        build_type: ant
-        script: |-
-          #!/bin/bash
-          ant -DARCHIVE_DIR=${ARCHIVE_DIR}
+        artifact_dir: ''
   - name: Deploy Stage
     inputs:
       - type: job
@@ -24,16 +17,18 @@ stages:
         job: Build
     triggers:
       - type: stage
-    properties:
-      - name: PB_DEPLOY_PROP
-        value: PBDeploy
-        type: text
     jobs:
-      - name: Deploy
+      - name: Deploy to dev
         type: deployer
         target:
-          region_id: '${PROD_REGION_ID}'
+          url: 'https://api.ng.bluemix.net'
           organization: '${PROD_ORG_NAME}'
           space: '${PROD_SPACE_NAME}'
           application: '${CF_APP_NAME}'
-        script: 'cf push ${CF_APP}'
+          region_id: '${PROD_REGION_ID}'
+        script: |-
+          #!/bin/bash
+          cf push "${CF_APP}"
+
+          # View logs
+          #cf logs "${CF_APP}" --recent
