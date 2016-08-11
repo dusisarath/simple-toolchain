@@ -7,16 +7,16 @@ stages:
     triggers:
       - type: commit
     properties:
-      - name: PB_BUILD_PROP
-        value: PradeepsBuild
-        type: text
+      - name: ljsdhklzsdklfj
+        value: |-
+          asdklsdfg
+          sldkfgkljkl;
+          ]sdglkhklsjdl;gjkljsdlkg
+        type: text_area
     jobs:
       - name: Build
         type: builder
-        build_type: ant
-        script: |-
-          #!/bin/bash
-          ant -DARCHIVE_DIR=${ARCHIVE_DIR}
+        artifact_dir: ''
   - name: Deploy Stage
     inputs:
       - type: job
@@ -25,15 +25,20 @@ stages:
     triggers:
       - type: stage
     properties:
-      - name: PB_DEPLOY_PROP
-        value: PBDeploy
+      - name: deploy_prop
+        value: asfklkhkljaklsf
         type: text
     jobs:
-      - name: Deploy
+      - name: Deploy to dev
         type: deployer
         target:
           region_id: '${PROD_REGION_ID}'
           organization: '${PROD_ORG_NAME}'
           space: '${PROD_SPACE_NAME}'
           application: '${CF_APP_NAME}'
-        script: 'cf push ${CF_APP}'
+        script: |-
+          #!/bin/bash
+          cf push "${CF_APP}"
+
+          # View logs
+          #cf logs "${CF_APP}" --recent
