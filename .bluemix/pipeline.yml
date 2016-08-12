@@ -1,8 +1,8 @@
 stages:
-  - name: Build Stage
+  - name: MyStage
     inputs:
       - type: git
-        branch: release
+        branch: master
         service: '${SAMPLE_REPO}'
     triggers:
       - type: commit
@@ -11,9 +11,9 @@ stages:
         type: deployer
         target:
           region_id: 'ibm:yp:us-south'
-          organization: PradeepB
-          space: dev
-          application: ids2otc
+          organization: dusisarath@in.ibm.com
+          space: Dev
+          application: TestProject
         script: |
           #!/bin/bash
           cd com.ibm.devops.otc.migration.entry
