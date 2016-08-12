@@ -1,39 +1,19 @@
 stages:
-  - name: Build Stage
+  - name: MyStage
     inputs:
       - type: git
-        branch: master
-        service: '${SAMPLE_REPO}'
+        branch: release
     triggers:
       - type: commit
-    properties:
-      - name: PB_BUILD_PROP
-        value: PradeepsBuild
-        type: text
-    jobs:
-      - name: Build
-        type: builder
-        build_type: ant
-        script: |-
-          #!/bin/bash
-          ant -DARCHIVE_DIR=${ARCHIVE_DIR}
-  - name: Deploy Stage
-    inputs:
-      - type: job
-        stage: Build Stage
-        job: Build
-    triggers:
-      - type: stage
-    properties:
-      - name: PB_DEPLOY_PROP
-        value: PBDeploy
-        type: text
     jobs:
       - name: Deploy
         type: deployer
         target:
-          region_id: '${PROD_REGION_ID}'
-          organization: '${PROD_ORG_NAME}'
-          space: '${PROD_SPACE_NAME}'
-          application: '${CF_APP_NAME}'
-        script: 'cf push ${CF_APP}'
+          region_id: 'ibm:yp:us-south'
+          organization: PradeepB
+          space: dev
+          application: ids2otc
+        script: |
+          #!/bin/bash
+          cd com.ibm.devops.otc.migration.entry
+          cf push "${CF_APP}"
