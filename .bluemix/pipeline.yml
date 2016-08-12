@@ -1,20 +1,45 @@
 stages:
-  - name: MyStage
+  - name: Build Stage
     inputs:
       - type: git
-        branch: release
+        branch: master
         service: '${SAMPLE_REPO}'
     triggers:
       - type: commit
+    properties:
+      - name: ljsdhklzsdklfj
+        value: |-
+          asdklsdfg
+          sldkfgkljkl;
+          ]sdglkhklsjdl;gjkljsdlkg
+        type: text_area
     jobs:
-      - name: Deploy
+      - name: Build
+        type: builder
+        artifact_dir: ''
+  - name: Deploy Stage
+    inputs:
+      - type: job
+        stage: Build Stage
+        job: Build
+        service: '${SAMPLE_REPO}'
+    triggers:
+      - type: stage
+    properties:
+      - name: deploy_prop
+        value: asfklkhkljaklsf
+        type: text
+    jobs:
+      - name: Deploy to dev
         type: deployer
         target:
           region_id: 'ibm:yp:us-south'
-          organization: PradeepB
-          space: dev
-          application: ids2otc
-        script: |
+          organization: dusisarath@in.ibm.com
+          space: Dev
+          application: Delivery-Pipeline-Testing-App
+        script: |-
           #!/bin/bash
-          cd com.ibm.devops.otc.migration.entry
           cf push "${CF_APP}"
+
+          # View logs
+          #cf logs "${CF_APP}" --recent
