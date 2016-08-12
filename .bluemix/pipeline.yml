@@ -2,7 +2,7 @@ stages:
   - name: MyStage
     inputs:
       - type: git
-        branch: master
+        branch: release
         service: '${SAMPLE_REPO}'
     triggers:
       - type: commit
