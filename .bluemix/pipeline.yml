@@ -18,3 +18,21 @@ stages:
           #!/bin/bash
           cd com.ibm.devops.otc.migration.entry
           cf push "${CF_APP}"
+  - name: 2nd Stage
+    triggers:
+      - type: stage
+    properties:
+      - name: sasa
+        value: sasass
+        type: text
+    jobs:
+      - name: deploy stage
+        type: deployer
+        target:
+          region_id: 'ibm:yp:us-south'
+          organization: dusisarath@in.ibm.com
+          space: Dev
+          application: TestProject
+        script: |
+          #!/bin/bash
+          cf push "${CF_APP}"
