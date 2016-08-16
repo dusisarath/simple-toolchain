@@ -1,31 +1,19 @@
 stages:
-  - name: Build and Test Stage
+  - name: Build Stage
     inputs:
       - type: git
         branch: master
         service: '${SAMPLE_REPO}'
     triggers:
       - type: commit
-    properties:
-      - name: dsdsd
-        value: sdsdsds
-        type: text
-      - name: sdsdsd
-        value: sdsdsdsdsdd
-        type: text_area
     jobs:
       - name: Build
         type: builder
         artifact_dir: ''
-      - name: MyTest
-        type: tester
-        script: |-
-          #!/bin/bash
-          # invoke tests here
   - name: Deploy Stage
     inputs:
       - type: job
-        stage: Build and Test Stage
+        stage: Build Stage
         job: Build
         service: '${SAMPLE_REPO}'
     triggers:
@@ -34,10 +22,10 @@ stages:
       - name: Deploy to dev
         type: deployer
         target:
-          region_id: 'ibm:yp:us-south'
+          region_id: 'ibm:ys1:us-south'
           organization: dusisarath@in.ibm.com
-          space: Dev
-          application: Microservices-UI-dusisarath-1347
+          space: dev
+          application: GitRepoMoveToStage1
         script: |-
           #!/bin/bash
           cf push "${CF_APP}"
