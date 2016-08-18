@@ -1,11 +1,15 @@
 stages:
   - name: Build Stage
-    inputs:
-      - type: git
-        branch: master
-        service: '${SAMPLE_REPO}'
-    triggers:
-      - type: commit
+    properties:
+      - name: ljsdhklzsdklfj
+        value: |-
+          asdklsdfg
+          sldkfgkljkl;
+          ]sdglkhklsjdl;gjkljsdlkg
+        type: text_area
+      - name: Sarath
+        value: Dusi
+        type: text
     jobs:
       - name: Build
         type: builder
@@ -18,14 +22,18 @@ stages:
         service: '${SAMPLE_REPO}'
     triggers:
       - type: stage
+    properties:
+      - name: deploy_prop
+        value: asfklkhkljaklsf
+        type: text
     jobs:
       - name: Deploy to dev
         type: deployer
         target:
-          region_id: 'ibm:ys1:us-south'
+          region_id: 'ibm:yp:us-south'
           organization: dusisarath@in.ibm.com
-          space: dev
-          application: GitRepoMoveToStage1
+          space: Dev
+          application: Delivery-Pipeline-Testing-App
         script: |-
           #!/bin/bash
           cf push "${CF_APP}"
